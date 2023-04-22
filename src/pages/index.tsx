@@ -8,7 +8,7 @@ const karla = Karla({ subsets: ["latin"] });
 export default function Home() {
   return (
     <main
-      className={`${karla.className} px-2
+      className={`${karla.className} px-3
     sm:px-7`}
     >
       <Navbar />

@@ -7,26 +7,55 @@ const Questions: React.FC = () => {
   useEffect(() => {
     fetch("https://johnmeade-webdev.github.io/chingu_quiz_api/trial.json")
       .then((res) => res.json())
-      .then((data) => setQuestions(data));
-    setQuestions((item) =>
-      item.map((question: QuestionType) => ({
-        ...question,
-        isClicked: false,
-        isCorrect: false,
-      }))
-    );
+      .then((data) => {
+        setQuestions(data);
+        setQuestions((item) =>
+          item.map((question: QuestionType) => ({
+            ...question,
+            isClicked: false,
+            isCorrect: false,
+            userAnswer: "none",
+          }))
+        );
+      });
   }, []);
 
-  const questionList = questions.map(({ question, id, choices }) => (
-    <SingleQuestion
-      key={id}
-      question={question}
-      answerA={choices.a}
-      answerB={choices.b}
-      answerC={choices.c}
-      answerD={choices.d}
-    />
-  ));
+  const setAnswer = (
+    clickedAnswer: "a" | "b" | "c" | "d",
+    questionId: number
+  ) => {
+    setQuestions((item) =>
+      item.map((question) =>
+        question.id === questionId
+          ? {
+              ...question,
+              isClicked: true,
+              isCorrect: clickedAnswer === question.answer ? true : false,
+              userAnswer: clickedAnswer,
+            }
+          : question
+      )
+    );
+    console.log(questions[0]);
+  };
+
+  const questionList = questions.map(
+    ({ question, id, answer, isClicked, choices, userAnswer }) => (
+      <SingleQuestion
+        key={id}
+        id={id}
+        question={question}
+        answerA={choices.a}
+        answerB={choices.b}
+        answerC={choices.c}
+        answerD={choices.d}
+        correctAnswer={answer}
+        isClicked={isClicked}
+        setAnswer={setAnswer}
+        userAnswer={userAnswer}
+      />
+    )
+  );
 
   return (
     <div className="text-center">

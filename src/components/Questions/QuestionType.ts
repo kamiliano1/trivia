@@ -11,4 +11,5 @@ export type QuestionType = {
   answer: "a" | "b" | "c" | "d";
   isClicked: boolean;
   isCorrect: boolean;
+  userAnswer: "none" | "a" | "b" | "c" | "d";
 };
