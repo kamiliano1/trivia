@@ -1,3 +1,4 @@
+export type QuestionLetterType = "a" | "b" | "c" | "d";
 export type QuestionType = {
   question: string;
   id: number;
@@ -8,8 +9,8 @@ export type QuestionType = {
     c: string;
     d: string;
   };
-  answer: "a" | "b" | "c" | "d";
+  answer: QuestionLetterType;
   isClicked: boolean;
   isCorrect: boolean;
-  userAnswer: "none" | "a" | "b" | "c" | "d";
+  userAnswer: "none" | QuestionLetterType;
 };
