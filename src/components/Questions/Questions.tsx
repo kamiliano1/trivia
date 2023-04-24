@@ -1,47 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { QuestionType, QuestionLetterType } from "./QuestionType";
 import SingleQuestion from "./SingleQuestion";
-
+import NextQuestionButton from "./NextQuestionButton";
+import GameOverSummary from "./GameOverSummary";
+import useQuestions from "../../hooks/useQuestions";
 type questionInformationType = "Well done! Correct!" | "Wrong answer";
-
+const QUESTION_QUANTITY = 2;
 const Questions: React.FC = () => {
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const { questions } = useQuestions();
   const [currentQuestions, setCurrentQuestions] = useState<QuestionType[]>([]);
-  const [over, setOver] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(0);
   const [randomQuestionId, setRandomQuestionId] = useState<number[]>([]);
   const [answerInformation, setAnswerInformation] =
     useState<questionInformationType>("Well done! Correct!");
-
   const [userScore, setUserScore] = useState<number>(0);
-  useEffect(() => {
-    fetch("https://johnmeade-webdev.github.io/chingu_quiz_api/trial.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const questionArray = data.map((question: QuestionType) => ({
-          ...question,
-          isClicked: false,
-          isCorrect: false,
-          userAnswer: "none",
-        }));
-        setQuestions(questionArray);
-      });
-  }, []);
+  const generateRandomIdQuestion = useCallback(() => {
+    const randomQuestionIdArray: number[] = [];
+    while (randomQuestionIdArray.length < QUESTION_QUANTITY) {
+      const randomNumber = Math.floor(Math.random() * 39);
+      if (!randomQuestionIdArray.includes(randomNumber))
+        randomQuestionIdArray.push(randomNumber);
+    }
+    randomQuestionIdArray.sort((a, b) => a - b);
+    setRandomQuestionId(randomQuestionIdArray);
+    setCurrentQuestions(
+      questions.filter((quest, id) => randomQuestionId.includes(id))
+    );
+  }, [questions, randomQuestionId]);
 
   useEffect(() => {
-    if (currentQuestionNumber === questList.length - 1)
-      currentQuestions.map((item) =>
-        item.isCorrect ? setUserScore((prev) => prev + 1) : ""
-      );
-    console.log(currentQuestions);
-  }, [currentQuestions]);
+    if (!loading) generateRandomIdQuestion();
+  }, [generateRandomIdQuestion, loading]);
 
   useEffect(() => {
-    if (questions.length) {
+    if (currentQuestions.length) {
       setLoading(true);
     }
-  }, [currentQuestionNumber, questions]);
+  }, [currentQuestions]);
+
   useEffect(() => {
     if (!loading) return;
     currentQuestions[currentQuestionNumber].isCorrect
@@ -62,39 +60,34 @@ const Questions: React.FC = () => {
           : question
       )
     );
-    // console.log(questions[0]);
   };
+  const updateUserScore = useCallback(() => {
+    setUserScore((prev) => prev + 1);
+  }, []);
   useEffect(() => {
-    generateRandomIdQuestion();
-    setCurrentQuestions(questList);
-  }, [questions]);
+    setUserScore(0);
+    currentQuestions.map((item) => (item.isCorrect ? updateUserScore() : ""));
+  }, [currentQuestions, updateUserScore]);
 
-  const generateRandomIdQuestion = () => {
-    const randomQuestionIdArray: number[] = [];
-    while (randomQuestionIdArray.length < 3) {
-      const randomNumber = Math.floor(Math.random() * 38);
-      if (!randomQuestionIdArray.includes(randomNumber))
-        randomQuestionIdArray.push(randomNumber);
+  useEffect(() => {
+    if (
+      currentQuestionNumber + 1 === currentQuestions.length &&
+      currentQuestions[currentQuestionNumber].isClicked
+    ) {
+      setGameOver(true);
     }
-    randomQuestionIdArray.sort((a, b) => a - b);
-    setRandomQuestionId(randomQuestionIdArray);
-  };
-  const questList = questions.filter((quest, id) =>
-    randomQuestionId.includes(id)
-  );
-
+  }, [currentQuestionNumber, currentQuestions, currentQuestions.length]);
   const nextQuestion = () => {
-    if (currentQuestionNumber + 1 === questList.length) {
-      setOver(true);
+    if (currentQuestionNumber + 1 === currentQuestions.length) {
+      setGameOver(true);
       return;
     }
     setCurrentQuestionNumber((prev) => prev + 1);
   };
   const restartGame = () => {
     generateRandomIdQuestion();
-    setCurrentQuestions(questList);
     setUserScore(0);
-    setOver(false);
+    setGameOver(false);
     setCurrentQuestionNumber(0);
   };
   const questionList = currentQuestions.map(
@@ -113,44 +106,42 @@ const Questions: React.FC = () => {
       );
     }
   );
+  const actualQuestionPrinted = questionList[currentQuestionNumber];
+
   return (
-    <div className="text-center">
+    <div className="text-center max-w-[620px] mx-auto">
       {loading && (
         <>
           <h2>
             Question {currentQuestionNumber + 1} / {questionList.length}
           </h2>
-          {questionList[currentQuestionNumber]}
+          <h2>{currentQuestions[currentQuestionNumber].answer}</h2>
+          {actualQuestionPrinted}
           {currentQuestions[currentQuestionNumber] && (
             <>
               {currentQuestions[currentQuestionNumber].isClicked && (
                 <>
                   {currentQuestions[currentQuestionNumber] && (
-                    <p className="border-t-[1px] pt-2">{answerInformation}</p>
+                    <p className="border-t-[1px] mt-5 mb-3 pt-2">
+                      {answerInformation}
+                    </p>
                   )}
-                  <button
-                    className="mt-2 rounded-lg border-[1px] w-full py-3"
-                    onClick={nextQuestion}
-                  >
-                    Next Question
-                  </button>
+                  {!gameOver && (
+                    <NextQuestionButton nextQuestion={nextQuestion} />
+                  )}
                 </>
               )}
             </>
           )}
         </>
       )}
-
-      {over && (
-        <>
-          <h2>
-            Congratulations your total score is {userScore} from total{" "}
-            {questionList.length} questions
-          </h2>
-          <button onClick={restartGame}>Play again</button>
-        </>
+      {gameOver && (
+        <GameOverSummary
+          userScore={userScore}
+          questionQuantity={questionList.length}
+          restartGame={restartGame}
+        />
       )}
-      <div></div>
     </div>
   );
 };

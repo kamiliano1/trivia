@@ -8,7 +8,7 @@ type NavbarProps = {};
 const montserrat = Montserrat({ subsets: ["latin"] });
 const Navbar: React.FC<NavbarProps> = () => {
   return (
-    <div className=" text-center  py-3 sm:flex sm:items-center ">
+    <div className=" text-center py-3 sm:flex sm:items-center ">
       <h1
         className={`uppercase mr-auto font-bold text-2xl pb-5 sm:pb-0 ${montserrat.className} `}
       >
@@ -16,7 +16,7 @@ const Navbar: React.FC<NavbarProps> = () => {
       </h1>
       <Link
         className="block sm:inline-block pb-2 sm:pb-0 hover:opacity-70 sm:pr-7 sm:text-lg"
-        href=""
+        href="/"
       >
         Home
       </Link>
@@ -24,7 +24,7 @@ const Navbar: React.FC<NavbarProps> = () => {
       {/* <Link href="/questions" className="hover:opacity-70 sm:text-lg">
         Questions
       </Link> */}
-      <Link href="/" className="hover:opacity-70 sm:text-lg">
+      <Link href="/questions" className="hover:opacity-70 sm:text-lg">
         Questions
       </Link>
     </div>

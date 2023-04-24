@@ -1,5 +1,5 @@
 import React from "react";
-import { QuestionType, QuestionLetterType } from "./QuestionType";
+import { QuestionLetterType } from "./QuestionType";
 import AnswerButton from "./AnswerButton";
 type SingleQuestionProps = {
   id: number;
@@ -52,23 +52,9 @@ const SingleQuestion: React.FC<SingleQuestionProps> = ({
           setAnswer={setAnswer}
         />
       ));
-  const print = answerLetter.map((ans) => {
-    return (
-      <AnswerButton
-        key={answers[ans]}
-        buttonLetter={ans}
-        questionId={id}
-        answer={answers[ans]}
-        correctAnswer={correctAnswer}
-        isClicked={isClicked}
-        userAnswer={userAnswer}
-        setAnswer={setAnswer}
-      />
-    );
-  });
   return (
     <div
-      className="grid grid-cols-1 grid-rows-[repeat(6,max-content)]
+      className="grid grid-cols-1 
     sm:grid-cols-[repeat(2,minmax(130px,_300px))] 
     sm:grid-rows-[1fr,max-content,max-content] gap-5 justify-center"
     >
