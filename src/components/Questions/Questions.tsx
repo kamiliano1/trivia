@@ -5,7 +5,7 @@ import NextQuestionButton from "./NextQuestionButton";
 import GameOverSummary from "./GameOverSummary";
 import useQuestions from "../../hooks/useQuestions";
 type questionInformationType = "Well done! Correct!" | "Wrong answer";
-const QUESTION_QUANTITY = 2;
+const QUESTION_QUANTITY = 10;
 const Questions: React.FC = () => {
   const { questions } = useQuestions();
   const [currentQuestions, setCurrentQuestions] = useState<QuestionType[]>([]);
@@ -16,7 +16,24 @@ const Questions: React.FC = () => {
   const [answerInformation, setAnswerInformation] =
     useState<questionInformationType>("Well done! Correct!");
   const [userScore, setUserScore] = useState<number>(0);
-  const generateRandomIdQuestion = useCallback(() => {
+
+  useEffect(() => {
+    const randomQuestionIdArray: number[] = [];
+    while (randomQuestionIdArray.length < QUESTION_QUANTITY) {
+      const randomNumber = Math.floor(Math.random() * 39);
+      if (!randomQuestionIdArray.includes(randomNumber))
+        randomQuestionIdArray.push(randomNumber);
+    }
+    randomQuestionIdArray.sort((a, b) => a - b);
+    setRandomQuestionId(randomQuestionIdArray);
+  }, [questions]);
+
+  useEffect(() => {
+    setCurrentQuestions(
+      questions.filter((quest, id) => randomQuestionId.includes(id))
+    );
+  }, [questions, randomQuestionId]);
+  const generateRandomIdQuestion = () => {
     const randomQuestionIdArray: number[] = [];
     while (randomQuestionIdArray.length < QUESTION_QUANTITY) {
       const randomNumber = Math.floor(Math.random() * 39);
@@ -28,11 +45,7 @@ const Questions: React.FC = () => {
     setCurrentQuestions(
       questions.filter((quest, id) => randomQuestionId.includes(id))
     );
-  }, [questions, randomQuestionId]);
-
-  useEffect(() => {
-    if (!loading) generateRandomIdQuestion();
-  }, [generateRandomIdQuestion, loading]);
+  };
 
   useEffect(() => {
     if (currentQuestions.length) {
@@ -115,14 +128,13 @@ const Questions: React.FC = () => {
           <h2>
             Question {currentQuestionNumber + 1} / {questionList.length}
           </h2>
-          <h2>{currentQuestions[currentQuestionNumber].answer}</h2>
           {actualQuestionPrinted}
           {currentQuestions[currentQuestionNumber] && (
             <>
               {currentQuestions[currentQuestionNumber].isClicked && (
                 <>
                   {currentQuestions[currentQuestionNumber] && (
-                    <p className="border-t-[1px] mt-5 mb-3 pt-2">
+                    <p className="border-t-[1px] mt-3 mb-3 pt-2">
                       {answerInformation}
                     </p>
                   )}

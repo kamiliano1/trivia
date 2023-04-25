@@ -27,15 +27,15 @@ const AnswerButton: React.FC<AnswerButtonProps> = ({
 }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const setQuestionAnswer = () => {
-    if (isClicked) return;
     setIsButtonClicked(true);
     setAnswer(buttonLetter, questionId);
   };
   return (
     <button
+      disabled={isClicked ? true : false}
       onClick={setQuestionAnswer}
-      className={`border-[1px] rounded-lg py-3 px-2 ${
-        !isClicked && "hover:opacity-70"
+      className={`border-[1px] border-black rounded-lg py-3 px-2 ${
+        !isClicked && "hover:opacity-70 hover:bg-slate-400"
       }
           ${
             isButtonClicked &&

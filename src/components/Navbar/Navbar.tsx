@@ -20,13 +20,6 @@ const Navbar: React.FC<NavbarProps> = () => {
       >
         Home
       </Link>
-
-      {/* <Link href="/questions" className="hover:opacity-70 sm:text-lg">
-        Questions
-      </Link> */}
-      <Link href="/questions" className="hover:opacity-70 sm:text-lg">
-        Questions
-      </Link>
     </div>
   );
 };

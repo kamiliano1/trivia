@@ -7,7 +7,7 @@ const NextQuestionButton: React.FC<NextQuestionButtonProps> = ({
 }) => {
   return (
     <button
-      className="rounded-lg border-[1px] w-full sm:w-auto py-3 px-5"
+      className="rounded-lg border-[1px] border-black bg-blue-300 w-full sm:w-auto py-3 px-5 hover:opacity-70"
       onClick={nextQuestion}
     >
       Next Question

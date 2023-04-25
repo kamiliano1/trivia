@@ -54,11 +54,13 @@ const SingleQuestion: React.FC<SingleQuestionProps> = ({
       ));
   return (
     <div
-      className="grid grid-cols-1 
+      className="grid grid-cols-1
     sm:grid-cols-[repeat(2,minmax(130px,_300px))] 
-    sm:grid-rows-[1fr,max-content,max-content] gap-5 justify-center"
+    sm:grid-rows-[1fr,max-content,max-content] gap-3 sm:gap-5 justify-center"
     >
-      <h2 className="text-center font-bold pb-5 sm:col-span-2">{question}</h2>
+      <h2 className="text-center font-bold pt-3 sm:pt-5 sm:col-span-2">
+        {question}
+      </h2>
       {printAnswers}
     </div>
   );

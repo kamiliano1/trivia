@@ -19,7 +19,7 @@ const GameOverSummary: React.FC<GameOverSummaryProps> = ({
         questions
       </h2>
       <button
-        className="rounded-lg border-[1px] w-full sm:w-auto py-3 sm:px-5 mt-5"
+        className="rounded-lg border-[1px] mt-4 border-black bg-blue-300 w-full sm:w-auto py-3 px-5 hover:opacity-70"
         onClick={restartGame}
       >
         Play again
