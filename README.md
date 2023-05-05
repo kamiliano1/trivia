@@ -20,7 +20,6 @@ Repo:
 - clone this project locally
 - run npm install
 - run npm run dev
-
 ```
 
 ## ToDo List
