@@ -18,14 +18,15 @@ const Questions: React.FC = () => {
   const [userScore, setUserScore] = useState<number>(0);
 
   useEffect(() => {
-    const randomQuestionIdArray: number[] = [];
-    while (randomQuestionIdArray.length < QUESTION_QUANTITY) {
-      const randomNumber = Math.floor(Math.random() * 39);
-      if (!randomQuestionIdArray.includes(randomNumber))
-        randomQuestionIdArray.push(randomNumber);
-    }
-    randomQuestionIdArray.sort((a, b) => a - b);
-    setRandomQuestionId(randomQuestionIdArray);
+    generateRandomIdQuestion();
+    // const randomQuestionIdArray: number[] = [];
+    // while (randomQuestionIdArray.length < QUESTION_QUANTITY) {
+    //   const randomNumber = Math.floor(Math.random() * 39);
+    //   if (!randomQuestionIdArray.includes(randomNumber))
+    //     randomQuestionIdArray.push(randomNumber);
+    // }
+    // randomQuestionIdArray.sort((a, b) => a - b);
+    // setRandomQuestionId(randomQuestionIdArray);
   }, [questions]);
 
   useEffect(() => {
@@ -42,9 +43,9 @@ const Questions: React.FC = () => {
     }
     randomQuestionIdArray.sort((a, b) => a - b);
     setRandomQuestionId(randomQuestionIdArray);
-    setCurrentQuestions(
-      questions.filter((quest, id) => randomQuestionId.includes(id))
-    );
+    // setCurrentQuestions(
+    //   questions.filter((quest, id) => randomQuestionId.includes(id))
+    // );
   };
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const Questions: React.FC = () => {
           : question
       )
     );
+    console.log(currentQuestions);
   };
   const updateUserScore = useCallback(() => {
     setUserScore((prev) => prev + 1);
@@ -99,6 +101,9 @@ const Questions: React.FC = () => {
   };
   const restartGame = () => {
     generateRandomIdQuestion();
+    setCurrentQuestions(
+      questions.filter((quest, id) => randomQuestionId.includes(id))
+    );
     setUserScore(0);
     setGameOver(false);
     setCurrentQuestionNumber(0);
