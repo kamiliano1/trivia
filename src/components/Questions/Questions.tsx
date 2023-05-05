@@ -134,7 +134,7 @@ const Questions: React.FC = () => {
               {currentQuestions[currentQuestionNumber].isClicked && (
                 <>
                   {currentQuestions[currentQuestionNumber] && (
-                    <p className="border-t-[1px] mt-3 mb-3 pt-2">
+                    <p className="border-t-[1px] border-black mt-3 mb-3 pt-2">
                       {answerInformation}
                     </p>
                   )}

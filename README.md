@@ -1,16 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chingu Solo Project - Tier 2 - Chingu Trivia
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project was created to complete Chingu solo project on tier 2, it takes data from [https://johnmeade-webdev.github.io/chingu_quiz_api/trial.json](https://johnmeade-webdev.github.io/chingu_quiz_api/trial.json)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Features
+
+- data contains questions from html, css and java script cathegories, total 39 questions.
+- after projct start it will provide 10 random questions, after clicking an answer user will get information if the answer was correct or not and he will be able to procced to next qestions
+- after 10th question, user will have result and way to play again with
+
+## Running the project
+
+Live version: [https://johnmeade-webdev.github.io/chingu_quiz_api/trial.json](https://johnmeade-webdev.github.io/chingu_quiz_api/trial.json)
+
+Repo:
+
 ```
+- clone this project locally
+- run npm install
+- run npm run dev
+
+```
+
+## ToDo List
+
+- page with all question to practice
+- ability to sign up and log in
+- when user is loggin, track which question he answered correctly and show them less often
+- implement timer, on how log it takes to user to solve all questions.
+- implement scoreboard with points and time
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
