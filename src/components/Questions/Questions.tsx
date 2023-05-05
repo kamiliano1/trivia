@@ -19,14 +19,6 @@ const Questions: React.FC = () => {
 
   useEffect(() => {
     generateRandomIdQuestion();
-    // const randomQuestionIdArray: number[] = [];
-    // while (randomQuestionIdArray.length < QUESTION_QUANTITY) {
-    //   const randomNumber = Math.floor(Math.random() * 39);
-    //   if (!randomQuestionIdArray.includes(randomNumber))
-    //     randomQuestionIdArray.push(randomNumber);
-    // }
-    // randomQuestionIdArray.sort((a, b) => a - b);
-    // setRandomQuestionId(randomQuestionIdArray);
   }, [questions]);
 
   useEffect(() => {
@@ -43,9 +35,6 @@ const Questions: React.FC = () => {
     }
     randomQuestionIdArray.sort((a, b) => a - b);
     setRandomQuestionId(randomQuestionIdArray);
-    // setCurrentQuestions(
-    //   questions.filter((quest, id) => randomQuestionId.includes(id))
-    // );
   };
 
   useEffect(() => {
@@ -74,7 +63,6 @@ const Questions: React.FC = () => {
           : question
       )
     );
-    console.log(currentQuestions);
   };
   const updateUserScore = useCallback(() => {
     setUserScore((prev) => prev + 1);

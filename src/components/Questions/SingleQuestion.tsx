@@ -27,7 +27,7 @@ const SingleQuestion: React.FC<SingleQuestionProps> = ({
 }) => {
   const answerLetter: QuestionLetterType[] = ["a", "b", "c", "d"];
   const booleanAnswerLetter: QuestionLetterType[] = ["a", "b"];
-  const printAnswers = answers["c"]
+  const printAnswers = answers["d"]
     ? answerLetter.map((ans) => (
         <AnswerButton
           key={answers[ans]}
@@ -52,6 +52,7 @@ const SingleQuestion: React.FC<SingleQuestionProps> = ({
           setAnswer={setAnswer}
         />
       ));
+
   return (
     <div
       className="grid grid-cols-1

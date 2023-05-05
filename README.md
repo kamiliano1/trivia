@@ -28,5 +28,6 @@ Repo:
 - page with all questions to practice
 - the ability to sign up and log in
 - when the user is login, track which question he answered correctly and show them less often
+- shuffle answers
 - implement a timer, on how long it takes for a user to solve all questions.
 - implement a scoreboard with points and time
